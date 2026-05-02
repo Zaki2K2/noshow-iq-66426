@@ -52,3 +52,5 @@ models/*.h5
 *~
 .DS_Store
 Thumbs.db
+
+uvicorn.log
