@@ -10,8 +10,7 @@ import pandas as pd
 import pytest
 from sklearn.pipeline import Pipeline
 
-from noshow_iq.model import load_model, predict, evaluate
-from noshow_iq.preprocess import get_feature_columns
+from noshow_iq.model import load_model, predict
 
 
 # ──────────────────────────────────────────────
@@ -75,7 +74,7 @@ def test_model_saved_and_loadable(tmp_path):
     """After train(), the .joblib file must exist and be loadable."""
     from noshow_iq.model import train
 
-    csv_path  = _make_tiny_dataset(tmp_path)
+    csv_path = _make_tiny_dataset(tmp_path)
     save_path = str(tmp_path / "model.joblib")
 
     train(csv_path, save_path=save_path)
@@ -94,27 +93,27 @@ def test_predict_output_shape(tmp_path):
     """predict() must return a dict with probability, risk_level, recommendation."""
     from noshow_iq.model import train
 
-    csv_path  = _make_tiny_dataset(tmp_path)
+    csv_path = _make_tiny_dataset(tmp_path)
     save_path = str(tmp_path / "model.joblib")
 
     model = train(csv_path, save_path=save_path)
 
     sample_features = {
-        "age":                 35,
-        "scholarship":          0,
-        "hypertension":         0,
-        "diabetes":             0,
-        "alcoholism":           0,
-        "handicap":             0,
-        "sms_received":         1,
-        "days_in_advance":      4,
-        "appointment_weekday":  2,
+        "age": 35,
+        "scholarship": 0,
+        "hypertension": 0,
+        "diabetes": 0,
+        "alcoholism": 0,
+        "handicap": 0,
+        "sms_received": 1,
+        "days_in_advance": 4,
+        "appointment_weekday": 2,
     }
 
     result = predict(model, sample_features)
 
-    assert "probability"    in result
-    assert "risk_level"     in result
+    assert "probability" in result
+    assert "risk_level" in result
     assert "recommendation" in result
     assert 0.0 <= result["probability"] <= 1.0
     assert result["risk_level"] in {"LOW", "MEDIUM", "HIGH"}

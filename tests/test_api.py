@@ -50,7 +50,7 @@ def test_health_endpoint(client):
     assert response.status_code == 200
     body = response.json()
     assert body["status"] == "ok"
-    assert "version"      in body
+    assert "version" in body
     assert "model_loaded" in body
 
 
@@ -64,23 +64,23 @@ def test_predict_endpoint(client):
     probability, risk_level, and recommendation.
     """
     payload = {
-        "age":                 45,
-        "scholarship":          0,
-        "hypertension":         1,
-        "diabetes":             0,
-        "alcoholism":           0,
-        "handicap":             0,
-        "sms_received":         1,
-        "days_in_advance":      5,
-        "appointment_weekday":  3,
+        "age": 45,
+        "scholarship": 0,
+        "hypertension": 1,
+        "diabetes": 0,
+        "alcoholism": 0,
+        "handicap": 0,
+        "sms_received": 1,
+        "days_in_advance": 5,
+        "appointment_weekday": 3,
     }
 
     response = client.post("/predict", json=payload)
 
     assert response.status_code == 200
     body = response.json()
-    assert "probability"    in body
-    assert "risk_level"     in body
+    assert "probability" in body
+    assert "risk_level" in body
     assert "recommendation" in body
 
 
@@ -94,15 +94,15 @@ def test_predict_rejects_invalid_age(client):
     (Unprocessable Entity), not 200.
     """
     payload = {
-        "age":                 -5,   # INVALID
-        "scholarship":          0,
-        "hypertension":         0,
-        "diabetes":             0,
-        "alcoholism":           0,
-        "handicap":             0,
-        "sms_received":         0,
-        "days_in_advance":      0,
-        "appointment_weekday":  0,
+        "age": -5,  # INVALID
+        "scholarship": 0,
+        "hypertension": 0,
+        "diabetes": 0,
+        "alcoholism": 0,
+        "handicap": 0,
+        "sms_received": 0,
+        "days_in_advance": 0,
+        "appointment_weekday": 0,
     }
 
     response = client.post("/predict", json=payload)

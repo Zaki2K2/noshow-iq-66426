@@ -69,22 +69,22 @@ class AppointmentInput(BaseModel):
     All values come from the cleaned dataset columns.
     Use 1 for True, 0 for False on binary fields.
     """
-    age:                  int   = Field(..., ge=0, le=115, example=35)
-    scholarship:          int   = Field(..., ge=0, le=1,  example=0)
-    hypertension:         int   = Field(..., ge=0, le=1,  example=0)
-    diabetes:             int   = Field(..., ge=0, le=1,  example=0)
-    alcoholism:           int   = Field(..., ge=0, le=1,  example=0)
-    handicap:             int   = Field(..., ge=0, le=1,  example=0)
-    sms_received:         int   = Field(..., ge=0, le=1,  example=1)
-    days_in_advance:      int   = Field(..., ge=0,        example=7)
-    appointment_weekday:  int   = Field(..., ge=0, le=6,  example=2)
+    age: int = Field(..., ge=0, le=115, json_schema_extra={"example": 35})
+    scholarship: int = Field(..., ge=0, le=1)
+    hypertension: int = Field(..., ge=0, le=1)
+    diabetes: int = Field(..., ge=0, le=1)
+    alcoholism: int = Field(..., ge=0, le=1)
+    handicap: int = Field(..., ge=0, le=1)
+    sms_received: int = Field(..., ge=0, le=1)
+    days_in_advance: int = Field(..., ge=0)
+    appointment_weekday: int = Field(..., ge=0, le=6)
 
 
 class PredictionOutput(BaseModel):
-    probability:      float
-    risk_level:       str
-    recommendation:   str
-    model_version:    str
+    probability: float
+    risk_level: str
+    recommendation: str
+    model_version: str
 
 
 # ──────────────────────────────────────────────

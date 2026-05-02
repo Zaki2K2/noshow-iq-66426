@@ -75,7 +75,7 @@ def train(csv_path: str, save_path: str | None = None) -> Pipeline:
     ])
 
     # 4. Fit the model
-    print("[train] Fitting model …")
+    print("[train] Fitting model ...")
     pipeline.fit(X_train, y_train)
 
     # 5. Evaluate and print a human-readable report

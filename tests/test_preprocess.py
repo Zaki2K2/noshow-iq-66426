@@ -12,7 +12,6 @@ from noshow_iq.preprocess import (
     load_and_clean,
     get_feature_columns,
     _rename_columns,
-    _engineer_features,
 )
 
 
@@ -60,14 +59,14 @@ def test_rename_columns(raw_df):
     """
     renamed = _rename_columns(raw_df)
 
-    assert "hypertension"  in renamed.columns, "Hipertension was not renamed"
-    assert "handicap"      in renamed.columns, "Handcap was not renamed"
-    assert "no_show_raw"   in renamed.columns, "No-show was not renamed"
+    assert "hypertension" in renamed.columns, "Hipertension was not renamed"
+    assert "handicap" in renamed.columns, "Handcap was not renamed"
+    assert "no_show_raw" in renamed.columns, "No-show was not renamed"
 
     # Original messy names should be gone
-    assert "Hipertension"  not in renamed.columns
-    assert "Handcap"       not in renamed.columns
-    assert "No-show"       not in renamed.columns
+    assert "Hipertension" not in renamed.columns
+    assert "Handcap" not in renamed.columns
+    assert "No-show" not in renamed.columns
 
 
 # ──────────────────────────────────────────────
@@ -103,7 +102,7 @@ def test_engineered_features_exist(raw_df, tmp_path):
 
     df = load_and_clean(str(csv_path))
 
-    assert "days_in_advance"     in df.columns
+    assert "days_in_advance" in df.columns
     assert "appointment_weekday" in df.columns
 
 
