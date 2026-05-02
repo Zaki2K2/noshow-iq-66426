@@ -1,6 +1,6 @@
 # NoShowIQ — Clinic Appointment No-Show Predictor
 
-> **SAP ID: 66426** · MLOps Assignment
+> **SAP ID: 66426** · MLOps Mid Exam
 
 NoShowIQ is a production-style machine learning API that predicts whether a
 clinic patient is likely to miss their appointment. It combines scikit-learn,
@@ -27,16 +27,16 @@ FastAPI, MongoDB, Docker, and automated CI/CD into a single clean project.
 
 ## 1. Project Overview
 
-| Item | Detail |
-|------|--------|
-| **Model** | Logistic Regression (`class_weight="balanced"`) |
-| **Dataset** | Brazilian clinic appointments (~110k rows) from Kaggle |
-| **Target** | `no_show` — 1 if patient missed appointment, 0 if they came |
+| Item         | Detail                                                              |
+| ------------ | ------------------------------------------------------------------- |
+| **Model**    | Logistic Regression (`class_weight="balanced"`)                     |
+| **Dataset**  | Brazilian clinic appointments (~110k rows) from Kaggle              |
+| **Target**   | `no_show` — 1 if patient missed appointment, 0 if they came         |
 | **Features** | Age, scholarship, hypertension, SMS received, days in advance, etc. |
-| **API** | FastAPI, 4 endpoints |
-| **Database** | MongoDB (predictions + training runs) |
-| **Package** | Published to TestPyPI |
-| **Deploy** | Docker Hub + Hugging Face Spaces |
+| **API**      | FastAPI, 4 endpoints                                                |
+| **Database** | MongoDB (predictions + training runs)                               |
+| **Package**  | Published to TestPyPI                                               |
+| **Deploy**   | Docker Hub + Hugging Face Spaces                                    |
 
 ---
 
@@ -73,12 +73,12 @@ Copy `.env.example` to `.env` and fill in your values:
 cp .env.example .env
 ```
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `MONGO_URI` | MongoDB connection string | `mongodb://localhost:27017` |
-| `MONGO_DB_NAME` | Database name | `noshow_iq` |
-| `MODEL_PATH` | Path to serialised model | `models/model.joblib` |
-| `APP_ENV` | `development` / `production` | `development` |
+| Variable        | Description                  | Default                     |
+| --------------- | ---------------------------- | --------------------------- |
+| `MONGO_URI`     | MongoDB connection string    | `mongodb://localhost:27017` |
+| `MONGO_DB_NAME` | Database name                | `noshow_iq`                 |
+| `MODEL_PATH`    | Path to serialised model     | `models/model.joblib`       |
+| `APP_ENV`       | `development` / `production` | `development`               |
 
 **Never commit your real `.env` file** — it is listed in `.gitignore`.
 
@@ -116,6 +116,7 @@ python -m noshow_iq.model data/raw/appointments.csv
 ```
 
 This will:
+
 - Clean and engineer features
 - Train a LogisticRegression pipeline
 - Print precision / recall / F1 for both classes
@@ -132,6 +133,7 @@ uvicorn noshow_iq.api:app --reload --port 8000
 ```
 
 Open your browser at:
+
 - **API docs:** `http://localhost:8000/docs`
 - **Health check:** `http://localhost:8000/health`
 
@@ -228,11 +230,11 @@ curl -X POST http://localhost:8000/predict \
 
 **Risk levels:**
 
-| Level | Probability | Action |
-|-------|-------------|--------|
-| LOW | < 0.40 | No action needed |
+| Level  | Probability | Action            |
+| ------ | ----------- | ----------------- |
+| LOW    | < 0.40      | No action needed  |
 | MEDIUM | 0.40 – 0.69 | Send SMS reminder |
-| HIGH | ≥ 0.70 | SMS + phone call |
+| HIGH   | ≥ 0.70      | SMS + phone call  |
 
 ---
 
@@ -270,19 +272,19 @@ curl http://localhost:8000/stats
 
 ## 10. CI/CD Pipeline
 
-| Workflow | Trigger | Steps |
-|----------|---------|-------|
-| `lint.yml` | Push / PR to `main` | flake8 |
+| Workflow    | Trigger             | Steps                                                               |
+| ----------- | ------------------- | ------------------------------------------------------------------- |
+| `lint.yml`  | Push / PR to `main` | flake8                                                              |
 | `ci-cd.yml` | Push / PR to `main` | flake8 → pytest → Docker build → Docker Hub push → HF Space restart |
 
 **Required GitHub Secrets:**
 
-| Secret | Purpose |
-|--------|---------|
-| `DOCKER_HUB_USERNAME` | Docker Hub account name |
-| `DOCKER_HUB_TOKEN` | Docker Hub access token |
-| `HF_TOKEN` | Hugging Face write token |
-| `HF_SPACE` | e.g. `yourname/noshow-iq` |
+| Secret                | Purpose                   |
+| --------------------- | ------------------------- |
+| `DOCKER_HUB_USERNAME` | Docker Hub account name   |
+| `DOCKER_HUB_TOKEN`    | Docker Hub access token   |
+| `HF_TOKEN`            | Hugging Face write token  |
+| `HF_SPACE`            | e.g. `yourname/noshow-iq` |
 
 ---
 
