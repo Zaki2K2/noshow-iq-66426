@@ -1,6 +1,15 @@
-# NoShowIQ — Clinic Appointment No-Show Predictor
+﻿---
+title: NoShowIQ
+emoji: 🏥
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+---
 
-> **SAP ID: 66426** · MLOps Mid Exam
+# NoShowIQ â€” Clinic Appointment No-Show Predictor
+
+> **SAP ID: 66426** Â· MLOps Mid Exam
 
 NoShowIQ is a production-style machine learning API that predicts whether a
 clinic patient is likely to miss their appointment. It combines scikit-learn,
@@ -31,7 +40,7 @@ FastAPI, MongoDB, Docker, and automated CI/CD into a single clean project.
 | ------------ | ------------------------------------------------------------------- |
 | **Model**    | Logistic Regression (`class_weight="balanced"`)                     |
 | **Dataset**  | Brazilian clinic appointments (~110k rows) from Kaggle              |
-| **Target**   | `no_show` — 1 if patient missed appointment, 0 if they came         |
+| **Target**   | `no_show` â€” 1 if patient missed appointment, 0 if they came         |
 | **Features** | Age, scholarship, hypertension, SMS received, days in advance, etc. |
 | **API**      | FastAPI, 4 endpoints                                                |
 | **Database** | MongoDB (predictions + training runs)                               |
@@ -44,23 +53,23 @@ FastAPI, MongoDB, Docker, and automated CI/CD into a single clean project.
 
 ```
 noshow-iq-66426/
-├── noshow_iq/          ← Python package
-│   ├── __init__.py
-│   ├── config.py       ← environment variable loader
-│   ├── preprocess.py   ← data cleaning + feature engineering
-│   ├── model.py        ← train / predict / evaluate
-│   ├── api.py          ← FastAPI app
-│   └── db.py           ← MongoDB helpers
-├── tests/              ← pytest test suite
-├── data/raw/           ← raw CSV (not committed)
-├── models/             ← model.joblib (not committed)
-├── .github/workflows/  ← GitHub Actions
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── pyproject.toml
-├── smoke_test.py
-└── README.md
+â”œâ”€â”€ noshow_iq/          â† Python package
+â”‚   â”œâ”€â”€ __init__.py
+â”‚   â”œâ”€â”€ config.py       â† environment variable loader
+â”‚   â”œâ”€â”€ preprocess.py   â† data cleaning + feature engineering
+â”‚   â”œâ”€â”€ model.py        â† train / predict / evaluate
+â”‚   â”œâ”€â”€ api.py          â† FastAPI app
+â”‚   â””â”€â”€ db.py           â† MongoDB helpers
+â”œâ”€â”€ tests/              â† pytest test suite
+â”œâ”€â”€ data/raw/           â† raw CSV (not committed)
+â”œâ”€â”€ models/             â† model.joblib (not committed)
+â”œâ”€â”€ .github/workflows/  â† GitHub Actions
+â”œâ”€â”€ Dockerfile
+â”œâ”€â”€ docker-compose.yml
+â”œâ”€â”€ requirements.txt
+â”œâ”€â”€ pyproject.toml
+â”œâ”€â”€ smoke_test.py
+â””â”€â”€ README.md
 ```
 
 ---
@@ -80,7 +89,7 @@ cp .env.example .env
 | `MODEL_PATH`    | Path to serialised model     | `models/model.joblib`       |
 | `APP_ENV`       | `development` / `production` | `development`               |
 
-**Never commit your real `.env` file** — it is listed in `.gitignore`.
+**Never commit your real `.env` file** â€” it is listed in `.gitignore`.
 
 ---
 
@@ -233,8 +242,8 @@ curl -X POST http://localhost:8000/predict \
 | Level  | Probability | Action            |
 | ------ | ----------- | ----------------- |
 | LOW    | < 0.40      | No action needed  |
-| MEDIUM | 0.40 – 0.69 | Send SMS reminder |
-| HIGH   | ≥ 0.70      | SMS + phone call  |
+| MEDIUM | 0.40 â€“ 0.69 | Send SMS reminder |
+| HIGH   | â‰¥ 0.70      | SMS + phone call  |
 
 ---
 
@@ -275,7 +284,7 @@ curl http://localhost:8000/stats
 | Workflow    | Trigger             | Steps                                                               |
 | ----------- | ------------------- | ------------------------------------------------------------------- |
 | `lint.yml`  | Push / PR to `main` | flake8                                                              |
-| `ci-cd.yml` | Push / PR to `main` | flake8 → pytest → Docker build → Docker Hub push → HF Space restart |
+| `ci-cd.yml` | Push / PR to `main` | flake8 â†’ pytest â†’ Docker build â†’ Docker Hub push â†’ HF Space restart |
 
 **Required GitHub Secrets:**
 
@@ -302,7 +311,7 @@ docker push <username>/noshow-iq:latest
 
 1. Create a new Space with **Docker** SDK.
 2. Set the Space's secrets: `MONGO_URI`, `MONGO_DB_NAME`, `MODEL_PATH`.
-3. Add the `HF_SPACE` and `HF_TOKEN` secrets in GitHub — the CI/CD pipeline
+3. Add the `HF_SPACE` and `HF_TOKEN` secrets in GitHub â€” the CI/CD pipeline
    will restart the Space automatically on every push to `main`.
 
 ### Smoke test against live deployment
@@ -345,4 +354,5 @@ twine upload --repository testpypi dist/*
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT â€” see [LICENSE](LICENSE).
+

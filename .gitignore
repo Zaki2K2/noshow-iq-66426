@@ -35,12 +35,9 @@ coverage.xml
 .ruff_cache/
 
 # ─── Data (raw data may be large; keep processed data too) ──
-data/raw/*.csv
-data/raw/*.json
-data/raw/*.parquet
+data/raw/
 
 # ─── Generated model artifacts ──────────────────────────────
-models/*.joblib
 models/*.pkl
 models/*.h5
 

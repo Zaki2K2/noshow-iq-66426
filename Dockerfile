@@ -5,7 +5,7 @@
 # Stage 2 (runtime): copy only what's needed; run as non-root user.
 #
 # Build:  docker build -t noshow-iq .
-# Run:    docker run -p 8000:8000 --env-file .env noshow-iq
+# Run:    docker run -p 7860:7860 --env-file .env noshow-iq
 # ─────────────────────────────────────────────────────────────
 
 # ── Stage 1: builder ─────────────────────────────────────────
@@ -41,11 +41,11 @@ RUN addgroup --system appgroup \
 USER appuser
 
 # Expose the FastAPI port
-EXPOSE 8000
+EXPOSE 7860
 
 # Healthcheck so Docker/Kubernetes knows if the container is alive
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:7860/health')"
 
 # Start the API server
-CMD ["uvicorn", "noshow_iq.api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "noshow_iq.api:app", "--host", "0.0.0.0", "--port", "7860"]
