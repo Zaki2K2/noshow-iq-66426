@@ -1,0 +1,3 @@
+# This file keeps the models/ directory tracked by Git.
+# The actual model.joblib is excluded via .gitignore.
+# Generate it by running: python -m noshow_iq.model data/raw/appointments.csv

@@ -1,0 +1,57 @@
+# ─── Secrets ────────────────────────────────────────────────
+.env
+*.pem
+*.key
+
+# ─── Python ─────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.eggs/
+
+# ─── Virtual environments ───────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# ─── Testing & coverage ─────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.coveragerc
+
+# ─── Type checking ──────────────────────────────────────────
+.mypy_cache/
+.ruff_cache/
+
+# ─── Data (raw data may be large; keep processed data too) ──
+data/raw/*.csv
+data/raw/*.json
+data/raw/*.parquet
+
+# ─── Generated model artifacts ──────────────────────────────
+models/*.joblib
+models/*.pkl
+models/*.h5
+
+# ─── Jupyter ────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── IDE & OS ───────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db

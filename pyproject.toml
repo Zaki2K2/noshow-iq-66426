@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+# ─────────────────────────────────────────────────────────────
+# Project metadata
+# ─────────────────────────────────────────────────────────────
+[project]
+name            = "noshow-iq-66426"
+version         = "0.1.0"
+description     = "ML API that predicts clinic appointment no-shows."
+readme          = "README.md"
+license         = { file = "LICENSE" }
+requires-python = ">=3.11"
+
+keywords = ["machine-learning", "mlops", "fastapi", "healthcare"]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.1",
+    "pydantic>=2.7.1",
+    "scikit-learn>=1.4.2",
+    "pandas>=2.2.2",
+    "numpy>=1.26.4",
+    "joblib>=1.4.2",
+    "pymongo>=4.7.2",
+    "python-dotenv>=1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.1",
+    "httpx>=0.27.0",
+    "flake8>=7.0.0",
+    "requests>=2.32.2",
+]
+
+# ─────────────────────────────────────────────────────────────
+# Entry points — lets you run `noshow-iq` from the terminal
+# ─────────────────────────────────────────────────────────────
+[project.scripts]
+noshow-iq = "noshow_iq.api:app"
+
+# ─────────────────────────────────────────────────────────────
+# Package discovery — auto-finds the noshow_iq/ folder
+# ─────────────────────────────────────────────────────────────
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["noshow_iq*"]
+
+# ─────────────────────────────────────────────────────────────
+# Tool configuration
+# ─────────────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.flake8]
+max-line-length = 100
+exclude = [".venv", "dist", "build", "__pycache__"]

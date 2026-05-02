@@ -1,0 +1,37 @@
+# ─────────────────────────────────────────────────────────────
+# lint.yml — Run flake8 on every push to main.
+#
+# This is the simplest CI workflow: it just checks code style.
+# ─────────────────────────────────────────────────────────────
+
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  flake8:
+    name: flake8 style check
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Install only flake8 (no need for the full requirements)
+      - name: Install flake8
+        run: pip install flake8==7.0.0
+
+      # 4. Run the linter — fail if any errors are found
+      - name: Run flake8
+        run: flake8 noshow_iq/ tests/ smoke_test.py --max-line-length=100

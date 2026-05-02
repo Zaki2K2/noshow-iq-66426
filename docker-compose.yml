@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────────────────────
+# docker-compose.yml — Three services:
+#   1. app          — NoShowIQ FastAPI server (port 8000)
+#   2. mongodb      — MongoDB 7 database (port 27017)
+#   3. mongo-express— Web UI to inspect MongoDB (port 8081)
+#
+# Usage:
+#   docker compose up --build        # start everything
+#   docker compose down -v           # stop and delete volumes
+# ─────────────────────────────────────────────────────────────
+
+services:
+
+  # ── 1. FastAPI application ──────────────────────────────────
+  app:
+    build: .
+    container_name: noshow_iq_app
+    ports:
+      - "8000:8000"
+    environment:
+      # Read from .env file — never hardcode real values here
+      MONGO_URI:      "mongodb://mongodb:27017"
+      MONGO_DB_NAME:  "${MONGO_DB_NAME:-noshow_iq}"
+      MODEL_PATH:     "models/model.joblib"
+      APP_ENV:        "${APP_ENV:-development}"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── 2. MongoDB ───────────────────────────────────────────────
+  mongodb:
+    image: mongo:7.0
+    container_name: noshow_iq_mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME:-admin}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:-changeme}"
+      MONGO_INITDB_DATABASE:      "${MONGO_DB_NAME:-noshow_iq}"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── 3. Mongo Express (web UI) ────────────────────────────────
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: noshow_iq_mongo_express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: "${MONGO_INITDB_ROOT_USERNAME:-admin}"
+      ME_CONFIG_MONGODB_ADMINPASSWORD: "${MONGO_INITDB_ROOT_PASSWORD:-changeme}"
+      ME_CONFIG_MONGODB_URL:           "mongodb://admin:changeme@mongodb:27017/"
+      ME_CONFIG_BASICAUTH:             "false"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+
+# ── Named volume for MongoDB persistence ──────────────────────
+volumes:
+  mongo_data:
